@@ -17,6 +17,7 @@ service User {
 }
 
 service Notifications{
+  rpc CreateNotification(CreateNotificationsReq) returns (CreateNotificationsRes);
   rpc GetAllNotifications(GetNotificationsReq) returns (GetNotificationsResponse);
   rpc GetAndMarkNotificationAsRead(GetAndMarkNotificationAsReadReq) returns (GetAndMarkNotificationAsReadRes);
 }
@@ -37,8 +38,7 @@ message RegisterReq{
     string fullname=3;
     string phone=4;
     string address=5;
-    string photo=6;
-    string role=7;
+    string role=6;
   }
   
   message RegisterRes{
