@@ -1,0 +1,191 @@
+syntax = "proto3";
+
+option go_package = "genproto/user";
+
+package user;
+
+service User {
+    rpc Register(RegisterReq) returns (RegisterRes);
+    rpc Login(LoginReq) returns (LoginRes);
+    rpc GetUSerByEmail(GetUSerByEmailReq) returns (GetUserResponse);
+    rpc GetUserById (UserId) returns (GetUserResponse);
+    rpc UpdatePassword (UpdatePasswordReq) returns (Void);
+    rpc ResetPassword (ResetPasswordReq) returns (Void);
+    rpc UpdateUser (UpdateUserRequest) returns (Void);
+    rpc DeleteUser (UserId) returns (Void);
+    rpc IsUserExist(UserId) returns (Void);
+}
+
+service Notifications{
+  rpc GetAllNotifications(GetNotificationsReq) returns (GetNotificationsResponse);
+  rpc GetAndMarkNotificationAsRead(GetAndMarkNotificationAsReadReq) returns (GetAndMarkNotificationAsReadRes);
+}
+
+service Cards{
+  rpc CreateCard(CreateCardReq) returns (CreateCardRes);
+  rpc GetCardsOfUser(GetCardsOfUserReq) returns (GetCardsOfUserRes);
+  rpc GetCardAmount(GetCardAmountReq) returns (GetCardAmountRes);
+  rpc UpdateCardAmount(UpdateCardAmountReq) returns (UpdateCardAmountRes);
+}
+
+
+// user 
+
+message RegisterReq{
+    string email=1;
+    string password=2;
+    string fullname=3;
+    string phone=4;
+    string address=5;
+    string photo=6;
+    string role=7;
+  }
+  
+  message RegisterRes{
+    string id=1;
+  }
+  
+  message LoginReq{
+    string email=1;
+    string password=2;
+  }
+  
+  message LoginRes{
+    string id=1;
+    string role=2;
+    string accestoken=3;
+    string refreshtoken=4;
+  }
+  
+  
+  message UserId{
+    string id=1;
+  }
+  
+  message GetUserResponse{
+    string id=1;
+    string email=2;
+    string fullname=3;
+    string phone=4;
+    string address=5;
+    string photo=6;
+    string role=7;
+    string createdAt=8;
+}
+  
+  message UpdatePasswordReq{
+    string id=1;
+    string password=3;
+}
+  
+  message ResetPassReq{
+    string email=1;
+    string password=2;
+    string code=3;
+}
+  
+  message Void{}
+  
+  message UpdateUserRequest{
+    string id=1;
+    string fullname=2;
+    string address=3;
+    string photo=4;
+    string phone=5;
+}
+  
+  message GetUSerByEmailReq{
+    string email=1;
+}
+  
+  message Tokens{
+    string refreshtoken=2;
+}
+  
+  message ResetPasswordReq{
+    string newpassword=1;
+    string oldpassword=2;
+    string id=3;
+}  
+
+
+// notifications 
+
+message CreateNotificationsReq{
+  string user_id=1;
+  string message=2;
+}
+
+message CreateNotificationsRes{
+  string id=1;
+}
+
+message GetNotificationsReq{
+  string user_id=1;
+}
+
+message Notification{
+  string id=1;
+  string user_id=2;
+  string message=3;
+}
+
+message GetNotificationsResponse{
+  repeated Notification notifications=1;
+}
+
+message GetAndMarkNotificationAsReadReq{
+  string user_id=1;
+}
+
+
+message GetAndMarkNotificationAsReadRes{
+  repeated Notification notifications=1;
+}
+
+
+// card 
+
+message CreateCardReq{
+  string user_id=1;
+  string card_number=2;
+  string expiration_date=3;
+  string security_code=4;
+}
+
+message CreateCardRes{
+  string id=1;
+}
+
+message GetCardsOfUserReq{
+  string user_id=1;
+}
+
+message Card{
+  string id=1;
+  string user_id=2;
+  string card_number=3;
+  string expiration_date=4;
+}
+
+message GetCardsOfUserRes{
+  repeated Card cards=1;
+}
+
+message GetCardAmountReq{
+  string card_id=1;
+}
+
+message GetCardAmountRes{
+  string amount=1;
+}
+
+
+message UpdateCardAmountReq{
+  string card_id=1;
+  string amount=2;
+}
+
+message UpdateCardAmountRes{
+  string Void=1;
+}
