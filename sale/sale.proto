@@ -16,7 +16,7 @@ service Product{
 }
 
 
-// redis
+// postgres
 service Process{
     rpc CreateProcess(CreateProcessRequest) returns (ProcessResponse);
     rpc GetProcessOfUserByProductId(GetProcessOfUserByProductIdRequest) returns (GetProcessOfUserByProductIdResponse);
