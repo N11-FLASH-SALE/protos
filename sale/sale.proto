@@ -225,7 +225,7 @@ message GetFeedbackRequest{
 }
 
 message GetFeedbackResponse{
-    int64 average_rating=3;
+    int64 average_rating=1;
     repeated FeedbackOfProduct feedbacks=2;
 }
 
