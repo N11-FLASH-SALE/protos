@@ -1,0 +1,294 @@
+syntax = "proto3";
+
+option go_package = "genproto/sale";
+
+package sale;
+
+
+// mongo
+service Product{
+    rpc CreateProduct(CreateProductRequest) returns (ProductId);
+    rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+    rpc GetProductById(ProductId) returns (GetProductByIdResponse);
+    rpc UpdateProduct(UpdateProductRequest) returns (Void);
+    rpc DeleteProduct(ProductId) returns (Void);
+    rpc IsProductOk(ProductId) returns (Void);
+}
+
+
+// redis
+service Process{
+    rpc CreateProcess(CreateProcessRequest) returns (ProcessResponse);
+    rpc GetProcessOfUserByProductId(GetProcessOfUserByProductIdRequest) returns (GetProcessOfUserByProductIdResponse);
+    rpc GetProcessByProductId(GetProcessByProductIdRequest) returns (GetProcessByProductIdResponse);
+    rpc UpdateProcess(UpdateProcessRequest) returns (Void);
+    rpc CancelProcess(CancelProcessRequest) returns (Void);
+}
+
+
+// postgres
+service Wishlist{
+    rpc CreateWishlist(CreateWishlistRequest) returns (WishlistResponse);
+    rpc GetWishlist(GetWishlistRequest) returns (WishlistResponse);
+    rpc GetWishlistById(GetWishlistRequest) returns (WishlistResponse);
+}
+
+// postgres
+service Feedback{
+    rpc CreateFeedback(CreateFeedbackRequest) returns (FeedbackResponse);
+    rpc GetFeedback(GetFeedbackRequest) returns (FeedbackResponse);
+    rpc GetFeedbackOfUser(GetFeedbackOfUserRequest) returns (GetFeedbackOfUserResponse);
+}
+
+// postgres
+service Bought{
+    rpc CreateBought(CreateBoughtRequest) returns (BoughtResponse);
+    rpc GetBought(GetBoughtRequest) returns (BoughtResponse);
+    rpc GetBoughtOfUser(GetBoughtOfUserRequest) returns (GetBoughtOfUserResponse);
+}
+
+message Void{}
+
+// product
+
+
+message Products{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    int64 price = 4;
+    int64 stock = 5;
+    int64 price_with_stock = 6;
+    int64 limit_of_product = 7;
+    repeated string size = 8;
+    repeated string color = 9;
+    string start_date=10;
+    string end_date=11;
+    string seller_id=12;
+}
+
+message CreateProductRequest{
+    string name = 1;
+    string description = 2;
+    int64 price = 3;
+    int64 stock = 4;
+    int64 limit_of_product = 5;
+    repeated string size = 6;
+    repeated string color = 7;
+    string start_date=8;
+    string end_date=9;
+    string seller_id=10;
+}
+
+message ProductId{
+    string id = 1;
+}
+
+message GetProductRequest{
+    string name = 1;
+    int64 price = 2;
+    int64 stock = 3;
+    int64 limit_of_product = 4;
+    int64 price_with_stock = 5;
+    string start_date=6;
+    string end_date=7;
+    string size = 8;
+    string color = 9;
+    string seller_id=10;
+    int64 limit=11;
+    int64 offset=12;
+}
+
+message GetProductResponse{
+    repeated Products product = 1;
+    int64 offset = 2;
+    int64 limit = 3;
+    int64 total_count = 4;
+}
+
+message GetProductByIdResponse{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    int64 price = 4;
+    int64 stock = 5;
+    int64 price_with_stock = 6;
+    int64 limit_of_product = 7;
+    repeated string size = 8;
+    repeated string color = 9;
+    string start_date=10;
+    string end_date=11;
+    string seller_id=12;
+}
+
+message UpdateProductRequest{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    int64 price = 4;
+    int64 stock = 5;
+    int64 price_with_stock = 6;
+    int64 limit_of_product = 7;
+    repeated string size = 8;
+    repeated string color = 9;
+    string start_date=10;
+    string end_date=11;
+}
+
+
+// wishlist 
+
+
+message CreateWishlistRequest{
+    string user_id = 1;
+    string product_id = 2;
+}
+
+message WishlistResponse{
+    string id = 1;
+}
+
+message GetWishlistRequest{
+    string user_id = 1;
+}
+
+
+message GetWishlistResponse{
+    repeated string product_id = 1;
+}
+
+
+// process 
+
+message Processes{
+    string id = 1;
+    string user_id = 2;
+    string product_id = 3;
+    string status=4;
+    int64 amount=5;
+}
+
+
+message CreateProcessRequest{
+    string user_id = 1;
+    string product_id = 2;
+    string status=3;
+    int64 amount=4;
+}
+
+message ProcessResponse{
+    string id = 1;
+}
+
+message GetProcessOfUserByProductIdRequest{
+    string user_id = 1;
+    string product_id = 2;
+}
+
+message GetProcessOfUserByProductIdResponse{
+    repeated Processes processes=1;
+}
+
+message GetProcessByProductIdRequest{
+    string product_id = 1;
+}
+
+message GetProcessByProductIdResponse{
+    repeated Processes processes=1;   
+}
+
+
+message UpdateProcessRequest{
+    string id = 1;
+    string status=2;
+}
+
+message CancelProcessRequest{
+    string id = 1;
+}
+
+// feedback
+
+message CreateFeedbackRequest{
+    string user_id = 1;
+    string product_id = 2;
+    int64 rating=3;
+    string description=4;
+}
+
+message FeedbackResponse{
+    string id = 1;
+}
+
+message GetFeedbackRequest{
+    string product_id = 1;
+}
+
+message GetFeedbackResponse{
+    int64 average_rating=3;
+    repeated FeedbackOfProduct feedbacks=2;
+}
+
+message FeedbackOfProduct{
+    string user_id = 1;
+    int64 rating=2;
+    string description=3;
+}
+
+message FeedbackOfUser{
+    string product_id = 1;
+    int64 rating=2;
+    string description=3;
+}
+
+message GetFeedbackOfUserRequest{
+    string user_id = 1;
+}
+
+message GetFeedbackOfUserResponse{
+    repeated FeedbackOfUser feedbacks=1;
+}
+
+// bought
+
+message CreateBoughtRequest{
+    string user_id = 1;
+    string product_id = 2;
+    int64 amount=3;
+    string card_number=4;
+    string amount_of_money=5;
+}
+
+message BoughtResponse{
+    string id = 1;
+}
+
+message GetBoughtRequest{
+    string product_id = 1;
+}
+
+message GetBoughtResponse{
+    repeated BoughtOfProduct boughts=1;
+}
+
+message BoughtOfProduct{
+    string user_id = 1;
+    int64 amount=2;
+    string card_number=3;
+    string amount_of_money=4;
+}
+
+message BoughtOfUser{
+    string product_id = 1;
+    int64 amount=2;
+    string card_number=3;
+    string amount_of_money=4;
+}
+
+message GetBoughtOfUserRequest{
+    string user_id = 1;
+}
+
+message GetBoughtOfUserResponse{
+    repeated BoughtOfProduct boughts=1;
+}
