@@ -66,6 +66,7 @@ message Products{
     string start_date=10;
     string end_date=11;
     string seller_id=12;
+    repeated string photos = 13;
 }
 
 message CreateProductRequest{
@@ -90,11 +91,10 @@ message GetProductRequest{
     double min_price = 2;
     double max_price = 3;
     int64 stock = 4;
-    int64 limit_of_product = 5;
-    double price_with_stock = 6;
-    string seller_id=7;
-    int64 limit=8;
-    int64 offset=9;
+    double price_with_stock = 5;
+    string seller_id=6;
+    int64 limit=7;
+    int64 offset=8;
 }
 
 message GetProductResponse{
@@ -115,6 +115,7 @@ message GetProductByIdResponse{
     string start_date=10;
     string end_date=11;
     string seller_id=12;
+    repeated string photos = 13;
 }
 
 message UpdateProductRequest{
