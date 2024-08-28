@@ -14,6 +14,7 @@ service Product{
     rpc DeleteProduct(ProductId) returns (Void);
     rpc IsProductOk(ProductId) returns (Void);
     rpc AddPhotosToProduct(AddPhotosRequest) returns (Void);
+    rpc DeletePhotosFromProduct(DeletePhotosRequest) returns (Void);
 }
 
 
@@ -132,6 +133,11 @@ message UpdateProductRequest{
 }
 
 message AddPhotosRequest{
+    string product_id = 1;
+    string photo_url = 2;
+}
+
+message DeletePhotosRequest{
     string product_id = 1;
     string photo_url = 2;
 }
