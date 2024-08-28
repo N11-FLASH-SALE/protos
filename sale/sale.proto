@@ -86,24 +86,19 @@ message ProductId{
 
 message GetProductRequest{
     string name = 1;
-    double price = 2;
-    int64 stock = 3;
-    int64 limit_of_product = 4;
-    int64 price_with_stock = 5;
-    string start_date=6;
-    string end_date=7;
-    string size = 8;
-    string color = 9;
-    string seller_id=10;
-    int64 limit=11;
-    int64 offset=12;
+    double min_price = 2;
+    double max_price = 3;
+    int64 stock = 4;
+    int64 limit_of_product = 5;
+    int64 price_with_stock = 6;
+    string seller_id=7;
+    int64 limit=8;
+    int64 offset=9;
 }
 
 message GetProductResponse{
     repeated Products product = 1;
-    int64 offset = 2;
-    int64 limit = 3;
-    int64 total_count = 4;
+    int64 total_count = 2;
 }
 
 message GetProductByIdResponse{
