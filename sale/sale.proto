@@ -13,6 +13,7 @@ service Product{
     rpc UpdateProduct(UpdateProductRequest) returns (Void);
     rpc DeleteProduct(ProductId) returns (Void);
     rpc IsProductOk(ProductId) returns (Void);
+    rpc AddPhotosToProduct(AddPhotosRequest) returns (Void);
 }
 
 
@@ -130,6 +131,10 @@ message UpdateProductRequest{
     string end_date=11;
 }
 
+message AddPhotosRequest{
+    string product_id = 1;
+    string photo_url = 2;
+}
 
 // wishlist 
 
