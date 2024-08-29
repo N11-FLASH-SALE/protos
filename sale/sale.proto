@@ -24,7 +24,7 @@ service Process{
     rpc GetProcessOfUserByProductId(GetProcessOfUserByProductIdRequest) returns (GetProcessOfUserByProductIdResponse);
     rpc GetProcessByProductId(GetProcessByProductIdRequest) returns (GetProcessByProductIdResponse);
     rpc UpdateProcess(UpdateProcessRequest) returns (Void);
-    rpc CancelProcess(CancelProcessRequest) returns (Void);
+    rpc CancelProcess(CancelProcessRequest) returns (CancelProcessResponse);
 }
 
 
@@ -222,6 +222,10 @@ message UpdateProcessRequest{
 
 message CancelProcessRequest{
     string id = 1;
+}
+
+message CancelProcessResponse{
+    int64 amount=1;
 }
 
 // feedback
