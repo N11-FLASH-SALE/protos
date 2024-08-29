@@ -31,8 +31,8 @@ service Process{
 // postgres
 service Wishlist{
     rpc CreateWishlist(CreateWishlistRequest) returns (WishlistResponse);
-    rpc GetWishlist(GetWishlistRequest) returns (WishlistResponse);
-    rpc GetWishlistById(GetWishlistRequest) returns (WishlistResponse);
+    rpc GetWishlist(GetWishlistRequest) returns (GetWishlistResponse);
+    rpc GetWishlistById(GetWishlistByIdRequest) returns (GetWishlistByIdResponse);
 }
 
 // postgres
@@ -151,17 +151,28 @@ message CreateWishlistRequest{
 }
 
 message WishlistResponse{
-    string id = 1;
+    string id=1;
+    string product_id = 2;
 }
+
+message GetWishlistResponse{
+    repeated WishlistResponse wishes=1;
+}
+
+
 
 message GetWishlistRequest{
     string user_id = 1;
 }
 
-
-message GetWishlistResponse{
-    repeated string product_id = 1;
+message GetWishlistByIdRequest{
+    string id = 1;
 }
+
+message GetWishlistByIdResponse{
+    string product_id=1;
+}
+
 
 
 // process 
