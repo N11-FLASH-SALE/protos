@@ -24,6 +24,7 @@ service Process{
     rpc GetProcessOfUserByProductId(GetProcessOfUserByProductIdRequest) returns (GetProcessOfUserByProductIdResponse);
     rpc GetProcessByUserId(GetProcessByUserIdRequest) returns (GetProcessByUserIdResponse);
     rpc GetProcessByProductId(GetProcessByProductIdRequest) returns (GetProcessByProductIdResponse);
+    rpc GetProcessById(GetProcessByIdRequest) returns (GetProcessByIdResponse);
     rpc UpdateProcess(UpdateProcessRequest) returns (Void);
     rpc CancelProcess(CancelProcessRequest) returns (CancelProcessResponse);
 }
@@ -235,6 +236,18 @@ message GetProcessByUserIdRequest{
 
 message GetProcessByUserIdResponse{
     repeated Processes processes=1;   
+}
+
+message GetProcessByIdRequest{
+    string id = 1;
+}
+
+message GetProcessByIdResponse{
+    string id = 1;
+    string user_id = 2;
+    string product_id = 3;
+    string status=4;
+    int64 amount=5;
 }
 
 // feedback
