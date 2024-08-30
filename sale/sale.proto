@@ -191,8 +191,7 @@ message Processes{
 message CreateProcessRequest{
     string user_id = 1;
     string product_id = 2;
-    string status=3;
-    int64 amount=4;
+    int64 amount=3;
 }
 
 message ProcessResponse{
