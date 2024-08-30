@@ -332,5 +332,5 @@ message GetBoughtOfUserRequest{
 }
 
 message GetBoughtOfUserResponse{
-    repeated BoughtOfProduct boughts=1;
+    repeated BoughtOfUser boughts=1;
 }
