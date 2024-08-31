@@ -13,6 +13,8 @@ service Product{
     rpc UpdateProduct(UpdateProductRequest) returns (Void);
     rpc DeleteProduct(ProductId) returns (Void);
     rpc IsProductOk(ProductId) returns (Void);
+    rpc AddPhotosToProduct(AddPhotosRequest) returns (Void);
+    rpc DeletePhotosFromProduct(DeletePhotosRequest) returns (Void);
 }
 
 
@@ -20,30 +22,32 @@ service Product{
 service Process{
     rpc CreateProcess(CreateProcessRequest) returns (ProcessResponse);
     rpc GetProcessOfUserByProductId(GetProcessOfUserByProductIdRequest) returns (GetProcessOfUserByProductIdResponse);
+    rpc GetProcessByUserId(GetProcessByUserIdRequest) returns (GetProcessByUserIdResponse);
     rpc GetProcessByProductId(GetProcessByProductIdRequest) returns (GetProcessByProductIdResponse);
+    rpc GetProcessById(GetProcessByIdRequest) returns (GetProcessByIdResponse);
     rpc UpdateProcess(UpdateProcessRequest) returns (Void);
-    rpc CancelProcess(CancelProcessRequest) returns (Void);
+    rpc CancelProcess(CancelProcessRequest) returns (CancelProcessResponse);
 }
 
 
 // postgres
 service Wishlist{
     rpc CreateWishlist(CreateWishlistRequest) returns (WishlistResponse);
-    rpc GetWishlist(GetWishlistRequest) returns (WishlistResponse);
-    rpc GetWishlistById(GetWishlistRequest) returns (WishlistResponse);
+    rpc GetWishlist(GetWishlistRequest) returns (GetWishlistResponse);
+    rpc GetWishlistById(GetWishlistByIdRequest) returns (GetWishlistByIdResponse);
 }
 
 // postgres
 service Feedback{
     rpc CreateFeedback(CreateFeedbackRequest) returns (FeedbackResponse);
-    rpc GetFeedback(GetFeedbackRequest) returns (FeedbackResponse);
+    rpc GetFeedback(GetFeedbackRequest) returns (GetFeedbackResponse);
     rpc GetFeedbackOfUser(GetFeedbackOfUserRequest) returns (GetFeedbackOfUserResponse);
 }
 
 // postgres
 service Bought{
     rpc CreateBought(CreateBoughtRequest) returns (BoughtResponse);
-    rpc GetBought(GetBoughtRequest) returns (BoughtResponse);
+    rpc GetBought(GetBoughtRequest) returns (GetBoughtResponse);
     rpc GetBoughtOfUser(GetBoughtOfUserRequest) returns (GetBoughtOfUserResponse);
 }
 
@@ -56,21 +60,22 @@ message Products{
     string id = 1;
     string name = 2;
     string description = 3;
-    int64 price = 4;
+    double price = 4;
     int64 stock = 5;
-    int64 price_with_stock = 6;
+    double price_without_stock = 6;
     int64 limit_of_product = 7;
     repeated string size = 8;
     repeated string color = 9;
     string start_date=10;
     string end_date=11;
     string seller_id=12;
+    repeated string photos = 13;
 }
 
 message CreateProductRequest{
     string name = 1;
     string description = 2;
-    int64 price = 3;
+    double price_without_stock = 3;
     int64 stock = 4;
     int64 limit_of_product = 5;
     repeated string size = 6;
@@ -86,48 +91,42 @@ message ProductId{
 
 message GetProductRequest{
     string name = 1;
-    int64 price = 2;
-    int64 stock = 3;
-    int64 limit_of_product = 4;
-    int64 price_with_stock = 5;
-    string start_date=6;
-    string end_date=7;
-    string size = 8;
-    string color = 9;
-    string seller_id=10;
-    int64 limit=11;
-    int64 offset=12;
+    double min_price = 2;
+    double max_price = 3;
+    int64 stock = 4;
+    string seller_id=5;
+    int64 limit=6;
+    int64 offset=7;
 }
 
 message GetProductResponse{
     repeated Products product = 1;
-    int64 offset = 2;
-    int64 limit = 3;
-    int64 total_count = 4;
+    int64 total_count = 2;
 }
 
 message GetProductByIdResponse{
     string id = 1;
     string name = 2;
     string description = 3;
-    int64 price = 4;
+    double price = 4;
     int64 stock = 5;
-    int64 price_with_stock = 6;
+    double price_without_stock = 6;
     int64 limit_of_product = 7;
     repeated string size = 8;
     repeated string color = 9;
     string start_date=10;
     string end_date=11;
     string seller_id=12;
+    repeated string photos = 13;
 }
 
 message UpdateProductRequest{
     string id = 1;
     string name = 2;
     string description = 3;
-    int64 price = 4;
+    double price = 4;
     int64 stock = 5;
-    int64 price_with_stock = 6;
+    double price_without_stock = 6;
     int64 limit_of_product = 7;
     repeated string size = 8;
     repeated string color = 9;
@@ -135,6 +134,15 @@ message UpdateProductRequest{
     string end_date=11;
 }
 
+message AddPhotosRequest{
+    string product_id = 1;
+    string photo_url = 2;
+}
+
+message DeletePhotosRequest{
+    string product_id = 1;
+    string photo_url = 2;
+}
 
 // wishlist 
 
@@ -145,17 +153,28 @@ message CreateWishlistRequest{
 }
 
 message WishlistResponse{
-    string id = 1;
+    string id=1;
+    string product_id = 2;
 }
+
+message GetWishlistResponse{
+    repeated WishlistResponse wishes=1;
+}
+
+
 
 message GetWishlistRequest{
     string user_id = 1;
 }
 
-
-message GetWishlistResponse{
-    repeated string product_id = 1;
+message GetWishlistByIdRequest{
+    string id = 1;
 }
+
+message GetWishlistByIdResponse{
+    string product_id=1;
+}
+
 
 
 // process 
@@ -172,8 +191,7 @@ message Processes{
 message CreateProcessRequest{
     string user_id = 1;
     string product_id = 2;
-    string status=3;
-    int64 amount=4;
+    int64 amount=3;
 }
 
 message ProcessResponse{
@@ -205,6 +223,30 @@ message UpdateProcessRequest{
 
 message CancelProcessRequest{
     string id = 1;
+}
+
+message CancelProcessResponse{
+    int64 amount=1;
+}
+
+message GetProcessByUserIdRequest{
+    string user_id = 1;
+}
+
+message GetProcessByUserIdResponse{
+    repeated Processes processes=1;   
+}
+
+message GetProcessByIdRequest{
+    string id = 1;
+}
+
+message GetProcessByIdResponse{
+    string id = 1;
+    string user_id = 2;
+    string product_id = 3;
+    string status=4;
+    int64 amount=5;
 }
 
 // feedback
@@ -256,7 +298,7 @@ message CreateBoughtRequest{
     string product_id = 2;
     int64 amount=3;
     string card_number=4;
-    string amount_of_money=5;
+    double amount_of_money=5;
 }
 
 message BoughtResponse{
@@ -275,14 +317,14 @@ message BoughtOfProduct{
     string user_id = 1;
     int64 amount=2;
     string card_number=3;
-    string amount_of_money=4;
+    double amount_of_money=4;
 }
 
 message BoughtOfUser{
     string product_id = 1;
     int64 amount=2;
     string card_number=3;
-    string amount_of_money=4;
+    double amount_of_money=4;
 }
 
 message GetBoughtOfUserRequest{
@@ -290,5 +332,5 @@ message GetBoughtOfUserRequest{
 }
 
 message GetBoughtOfUserResponse{
-    repeated BoughtOfProduct boughts=1;
+    repeated BoughtOfUser boughts=1;
 }
