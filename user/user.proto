@@ -181,7 +181,7 @@ message GetCardAmountRes{
 
 
 message UpdateCardAmountReq{
-  string card_id=1;
+  string card_number=1;
   double amount=2;
 }
 
