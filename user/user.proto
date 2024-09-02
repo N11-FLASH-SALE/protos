@@ -53,8 +53,7 @@ message RegisterReq{
   message LoginRes{
     string id=1;
     string role=2;
-    string accestoken=3;
-    string refreshtoken=4;
+    string refreshtoken=3;
   }
   
   
