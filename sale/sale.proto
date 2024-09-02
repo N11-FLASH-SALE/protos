@@ -50,6 +50,7 @@ service Bought{
     rpc CreateBought(CreateBoughtRequest) returns (BoughtResponse);
     rpc GetBought(GetBoughtRequest) returns (GetBoughtResponse);
     rpc GetBoughtOfUser(GetBoughtOfUserRequest) returns (GetBoughtOfUserResponse);
+    rpc GetBoughtByProcessId(GetBoughtByProcessIdReq) returns (GetBoughtByProcessIdRes);
 }
 
 message Void{}
@@ -346,4 +347,11 @@ message GetBoughtOfUserRequest{
 
 message GetBoughtOfUserResponse{
     repeated BoughtOfUser boughts=1;
+}
+message GetBoughtByProcessIdReq{
+    string process_id = 1;
+}
+
+message GetBoughtByProcessIdRes{
+    string card_number = 1;
 }
