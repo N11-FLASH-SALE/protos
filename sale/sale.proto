@@ -354,4 +354,5 @@ message GetBoughtByProcessIdReq{
 
 message GetBoughtByProcessIdRes{
     string card_number = 1;
+    string product_id=2;
 }
