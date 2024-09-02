@@ -329,6 +329,7 @@ message BoughtOfProduct{
     int64 amount=2;
     string card_number=3;
     double amount_of_money=4;
+    string status=5;
 }
 
 message BoughtOfUser{
@@ -336,6 +337,7 @@ message BoughtOfUser{
     int64 amount=2;
     string card_number=3;
     double amount_of_money=4;
+    string status=5;
 }
 
 message GetBoughtOfUserRequest{
