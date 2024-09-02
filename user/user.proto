@@ -172,7 +172,7 @@ message GetCardsOfUserRes{
 }
 
 message GetCardAmountReq{
-  string card_id=1;
+  string card_number=1;
 }
 
 message GetCardAmountRes{
