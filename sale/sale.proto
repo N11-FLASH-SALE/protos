@@ -10,6 +10,7 @@ service Product{
     rpc CreateProduct(CreateProductRequest) returns (ProductId);
     rpc GetProduct(GetProductRequest) returns (GetProductResponse);
     rpc GetProductById(ProductId) returns (GetProductByIdResponse);
+    rpc GetProductsByUserId(GetProductsByUserIdRequest) returns (GetProductsByUserIdResponse);
     rpc UpdateProduct(UpdateProductRequest) returns (Void);
     rpc DeleteProduct(ProductId) returns (Void);
     rpc IsProductOk(ProductId) returns (Void);
@@ -87,6 +88,16 @@ message CreateProductRequest{
 
 message ProductId{
     string id = 1;
+}
+
+message GetProductsByUserIdRequest{
+    string seller_id=1;
+    int64 limit=2;
+    int64 offset=3;
+}
+
+message GetProductsByUserIdResponse{
+    repeated Products product = 1;
 }
 
 message GetProductRequest{
@@ -318,6 +329,7 @@ message BoughtOfProduct{
     int64 amount=2;
     string card_number=3;
     double amount_of_money=4;
+    string status=5;
 }
 
 message BoughtOfUser{
@@ -325,6 +337,7 @@ message BoughtOfUser{
     int64 amount=2;
     string card_number=3;
     double amount_of_money=4;
+    string status=5;
 }
 
 message GetBoughtOfUserRequest{
