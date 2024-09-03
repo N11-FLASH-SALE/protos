@@ -311,6 +311,7 @@ message CreateBoughtRequest{
     int64 amount=3;
     string card_number=4;
     double amount_of_money=5;
+    string processID=6;
 }
 
 message BoughtResponse{
