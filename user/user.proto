@@ -27,6 +27,7 @@ service Cards{
   rpc GetCardsOfUser(GetCardsOfUserReq) returns (GetCardsOfUserRes);
   rpc GetCardAmount(GetCardAmountReq) returns (GetCardAmountRes);
   rpc UpdateCardAmount(UpdateCardAmountReq) returns (UpdateCardAmountRes);
+  rpc DeleteCard(DeleteCardReq) returns (Void);
 }
 
 
@@ -156,6 +157,10 @@ message CreateCardRes{
   string id=1;
 }
 
+message DeleteCardReq{
+  string card_number=1;
+}
+
 message GetCardsOfUserReq{
   string user_id=1;
 }
@@ -165,6 +170,7 @@ message Card{
   string user_id=2;
   string card_number=3;
   string expiration_date=4;
+  string card_type=5;
 }
 
 message GetCardsOfUserRes{
