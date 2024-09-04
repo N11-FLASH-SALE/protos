@@ -12,8 +12,10 @@ service Product{
     rpc GetProductById(ProductId) returns (GetProductByIdResponse);
     rpc GetProductsByUserId(GetProductsByUserIdRequest) returns (GetProductsByUserIdResponse);
     rpc UpdateProduct(UpdateProductRequest) returns (Void);
+    rpc UpdateLimitOfProduct(UpdateLimitOfProductRequest) returns (Void);
     rpc DeleteProduct(ProductId) returns (Void);
     rpc IsProductOk(ProductId) returns (Void);
+    rpc IsProductExists(ProductId) returns (Void);
     rpc AddPhotosToProduct(AddPhotosRequest) returns (Void);
     rpc DeletePhotosFromProduct(DeletePhotosRequest) returns (Void);
 }
@@ -139,11 +141,16 @@ message UpdateProductRequest{
     double price = 4;
     int64 stock = 5;
     double price_without_stock = 6;
-    int64 limit_of_product = 7;
-    repeated string size = 8;
-    repeated string color = 9;
-    string start_date=10;
-    string end_date=11;
+    repeated string size = 7;
+    repeated string color = 8;
+    string start_date=9;
+    string end_date=10;
+}
+
+
+message UpdateLimitOfProductRequest{
+    string id = 1;
+    int64 limit_of_product = 2;
 }
 
 message AddPhotosRequest{
